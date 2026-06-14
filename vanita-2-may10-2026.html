@@ -3,821 +3,274 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="VANITA 2 injection test report from May 10, 2026 by xLLM." />
-  <title>VANITA 2 — May 10, 2026 | xLLM</title>
+  <meta name="description" content="A May 10, 2026 xLLM injection and alignment-resistance test log across several AI systems." />
+  <title>VANITA 2 | xLLM</title>
   <style>
+
     :root {
-      --bg: #050505;
-      --panel: #0d0d0d;
-      --panel-2: #151515;
-      --text: #f4f4f4;
-      --muted: #a3a3a3;
-      --line: rgba(255, 255, 255, 0.14);
-      --soft-line: rgba(255, 255, 255, 0.08);
-      --white: #ffffff;
-      --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
-      --radius: 26px;
+      --bg: #090909;
+      --panel: #111;
+      --text: #f2f2f2;
+      --muted: #aaa;
+      --line: #2b2b2b;
+      --link: #fff;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.13), transparent 32%),
-        radial-gradient(circle at 84% 10%, rgba(255, 255, 255, 0.08), transparent 30%),
-        linear-gradient(180deg, #0a0a0a 0%, var(--bg) 45%, #000 100%);
+      margin: 0;
+      background: var(--bg);
       color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overflow-x: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 72%);
-      z-index: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
-      position: relative;
-      z-index: 1;
-      width: min(1180px, calc(100% - 40px));
+    .wrap {
+      width: min(920px, calc(100% - 32px));
       margin: 0 auto;
+      padding: 28px 0 48px;
     }
 
-    .nav {
+    header {
+      padding: 44px 0 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 28px 0;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 54px;
+      font-size: 14px;
+    }
+
+    nav a, .back-link, .report-link {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid #555;
+    }
+
+    nav a:hover, .back-link:hover, .report-link:hover {
+      border-color: #fff;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      font-size: 1.25rem;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: linear-gradient(135deg, #fff, #aaa 40%, #111 41%, #000);
-      color: #000;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      border-bottom: 0;
     }
 
     .nav-links {
       display: flex;
-      align-items: center;
-      gap: 24px;
+      gap: 18px;
       color: var(--muted);
-      font-size: 0.92rem;
     }
 
-    .nav-links a {
-      transition: color 180ms ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--white);
-    }
-
-    .nav-cta {
-      padding: 10px 16px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--white) !important;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .hero {
-      min-height: 76vh;
-      display: grid;
-      grid-template-columns: 1fr 0.86fr;
-      gap: 42px;
-      align-items: center;
-      padding: 56px 0 92px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
+    .kicker {
       color: var(--muted);
-      background: rgba(255, 255, 255, 0.035);
-      backdrop-filter: blur(14px);
-      font-size: 0.86rem;
-      margin-bottom: 24px;
-    }
-
-    .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--white);
-      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-      70% { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+      font-size: 14px;
+      margin-bottom: 14px;
     }
 
     h1 {
-      font-size: clamp(3.8rem, 9vw, 8rem);
-      line-height: 0.86;
-      letter-spacing: -0.09em;
-      font-weight: 900;
-      margin-bottom: 26px;
+      margin: 0 0 16px;
+      font-size: clamp(42px, 8vw, 86px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      font-weight: 800;
     }
 
-    .subtitle {
-      max-width: 740px;
+    .intro {
+      max-width: 690px;
+      margin: 0;
       color: #d7d7d7;
-      font-size: clamp(1.08rem, 2vw, 1.35rem);
-      line-height: 1.6;
-      letter-spacing: -0.025em;
-      margin-bottom: 34px;
+      font-size: 18px;
     }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 20px;
-      border-radius: 999px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button-primary {
-      background: var(--white);
-      color: #000;
-      border: 1px solid var(--white);
-    }
-
-    .button-secondary {
-      color: var(--white);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .hero-card {
-      position: relative;
-      min-height: 520px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
-        var(--panel);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.24), transparent 38%);
-      pointer-events: none;
-    }
-
-    .hero-topbar {
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-      border-bottom: 1px solid var(--soft-line);
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .dots {
-      display: flex;
-      gap: 7px;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.55);
-    }
-
-    .score-orbit {
-      position: relative;
-      min-height: 468px;
-      display: grid;
-      place-items: center;
-      padding: 32px;
-    }
-
-    .ring {
-      position: absolute;
-      width: min(78%, 350px);
-      aspect-ratio: 1;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 50%;
-    }
-
-    .ring:nth-child(2) {
-      width: min(58%, 260px);
-      border-style: dashed;
-      opacity: 0.9;
-    }
-
-    .ring:nth-child(3) {
-      width: min(36%, 160px);
-      opacity: 0.7;
-    }
-
-    .core-score {
-      position: relative;
-      width: 170px;
-      height: 170px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      background: rgba(0, 0, 0, 0.56);
-      box-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
-    }
-
-    .core-score strong {
-      display: block;
-      font-size: 3rem;
-      line-height: 1;
-      letter-spacing: -0.08em;
-    }
-
-    .core-score span {
-      color: var(--muted);
-      font-size: 0.76rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .floating-score {
-      position: absolute;
-      min-width: 120px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(12px);
-    }
-
-    .floating-score strong {
-      display: block;
-      font-size: 1.4rem;
-      letter-spacing: -0.05em;
-    }
-
-    .floating-score span {
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .pos-a { top: 80px; left: 48px; }
-    .pos-b { top: 132px; right: 44px; }
-    .pos-c { bottom: 82px; left: 72px; }
-    .pos-d { bottom: 66px; right: 62px; }
 
     section {
-      padding: 96px 0;
-      border-top: 1px solid var(--soft-line);
-    }
-
-    .section-heading {
-      max-width: 780px;
-      margin-bottom: 36px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.7;
-      margin-top: 14px;
+      padding: 34px 0;
+      border-bottom: 1px solid var(--line);
     }
 
     h2 {
-      font-size: clamp(2.2rem, 5vw, 4.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.07em;
+      margin: 0 0 16px;
+      font-size: 25px;
+      letter-spacing: -0.03em;
     }
 
-    .score-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
+    p { margin: 0 0 14px; }
 
-    .score-card {
-      min-height: 238px;
-      padding: 26px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .score-card::after {
-      content: "";
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      right: -76px;
-      top: -76px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 50%;
-    }
-
-    .model-name {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 28px;
+    .note {
       color: var(--muted);
-      font-size: 0.83rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .score-value {
-      font-size: clamp(2.6rem, 6vw, 4.6rem);
-      line-height: 0.88;
-      font-weight: 900;
-      letter-spacing: -0.09em;
-      margin-bottom: 18px;
-    }
-
-    .score-value span {
-      color: var(--muted);
-      font-size: 1.4rem;
-      letter-spacing: -0.04em;
-    }
-
-    .bar {
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-
-    .fill {
-      height: 100%;
-      border-radius: inherit;
-      background: var(--white);
-    }
-
-    .score-card p {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .untested {
-      opacity: 0.68;
-    }
-
-    .untested .score-value {
-      font-size: clamp(2.1rem, 4vw, 3.2rem);
-      letter-spacing: -0.07em;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 18px;
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.035);
-      padding: 30px;
-    }
-
-    .panel h3 {
-      font-size: 1.55rem;
-      letter-spacing: -0.045em;
-      margin-bottom: 12px;
-    }
-
-    .panel p,
-    .panel li {
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .panel ul {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .panel li {
-      padding-left: 26px;
-      position: relative;
-    }
-
-    .panel li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: #fff;
-    }
-
-    .table-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: #030303;
-      box-shadow: var(--shadow);
-    }
-
-    .table-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--soft-line);
-      color: var(--muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      max-width: 760px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 12px;
+      background: var(--panel);
+      border: 1px solid var(--line);
     }
 
-    th,
-    td {
+    th, td {
       text-align: left;
-      padding: 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.065);
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
     }
 
     th {
       color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
-    td {
-      color: #e8e8e8;
-      font-size: 0.96rem;
+    tr:last-child td { border-bottom: 0; }
+
+    .score {
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    tr:last-child td {
-      border-bottom: 0;
+    .untested { color: var(--muted); }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
     }
 
-    .status-tested {
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .status-untested {
-      color: var(--muted);
-    }
-
-    .cta {
-      text-align: center;
-      padding: 92px 24px;
+    .card {
       border: 1px solid var(--line);
-      border-radius: calc(var(--radius) + 10px);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.18), transparent 42%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
-      box-shadow: var(--shadow);
+      background: var(--panel);
+      padding: 16px;
     }
 
-    .cta p {
-      max-width: 660px;
-      margin: 18px auto 30px;
+    .card strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .card span {
       color: var(--muted);
-      font-size: 1.1rem;
-      line-height: 1.7;
+      font-size: 14px;
     }
 
     footer {
+      padding-top: 28px;
       display: flex;
       justify-content: space-between;
-      gap: 20px;
-      padding: 36px 0 48px;
+      gap: 18px;
       color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .score-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      font-size: 14px;
     }
 
     @media (max-width: 720px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 36px;
-      }
-
-      .score-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .floating-score {
-        position: static;
-        width: 100%;
-      }
-
-      .score-orbit {
-        display: grid;
-        gap: 12px;
-        place-items: stretch;
-      }
-
-      .ring,
-      .core-score {
-        display: none;
-      }
-
-      th,
-      td {
-        padding: 14px;
-      }
-
-      footer {
-        flex-direction: column;
-      }
+      .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      .summary { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
     }
+
   </style>
 </head>
 <body>
-  <div class="page">
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html" class="brand" aria-label="xLLM home">
-        <span class="brand-mark">x</span>
-        <span>xLLM</span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html#tests">All tests</a>
-        <a href="#scores">Scores</a>
-        <a href="#summary">Summary</a>
-      </div>
-    </nav>
+  <div class="wrap">
+    <header>
+      <nav aria-label="Main navigation">
+        <a class="brand" href="index.html">xLLM</a>
+        <div class="nav-links">
+          <a href="#scores">Scores</a>
+          <a href="#notes">Notes</a>
+          <a href="index.html#tests">All tests</a>
+        </div>
+      </nav>
+
+      <div class="kicker">Injection test report · May 10th, 2026</div>
+      <h1>VANITA 2</h1>
+      <p class="intro">A May 10, 2026 xLLM injection and alignment-resistance test log across several AI systems.</p>
+    </header>
 
     <main>
-      <header class="hero">
-        <div>
-          <div class="eyebrow"><span class="pulse"></span> Injection test report · May 10th, 2026</div>
-          <h1>VANITA 2</h1>
-          <p class="subtitle">
-            VANITA 2 is an xLLM prompt injection and alignment-resistance test comparing how different AI systems handle adversarial instruction pressure, boundary confusion, and compliance traps.
-          </p>
-          <div class="actions">
-            <a class="button button-primary" href="#scores">View scores</a>
-            <a class="button button-secondary" href="index.html#tests">Back to xLLM</a>
-          </div>
-        </div>
-
-        <div class="hero-card" aria-label="VANITA 2 score visualization">
-          <div class="hero-topbar">
-            <div class="dots" aria-hidden="true">
-              <span class="dot"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
-            </div>
-            <span>vanita-2.result</span>
-          </div>
-
-          <div class="score-orbit">
-            <div class="ring"></div>
-            <div class="ring"></div>
-            <div class="ring"></div>
-
-            <div class="core-score">
-              <div>
-                <strong>68</strong>
-                <span>highest score</span>
-              </div>
-            </div>
-
-            <div class="floating-score pos-a">
-              <strong>68/100</strong>
-              <span>DeepSeek</span>
-            </div>
-            <div class="floating-score pos-b">
-              <strong>11/100</strong>
-              <span>ChatGPT</span>
-            </div>
-            <div class="floating-score pos-c">
-              <strong>32/100</strong>
-              <span>Gemini</span>
-            </div>
-            <div class="floating-score pos-d">
-              <strong>Pending</strong>
-              <span>Claude / Kimi / Perplexity</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <section id="scores">
-        <div class="section-heading">
-          <h2>Model scores</h2>
-          <p>
-            Scores are recorded out of 100. Higher scores indicate stronger VANITA 2 test success against the target model according to the xLLM scoring method.
-          </p>
-        </div>
-
-        <div class="score-grid">
-          <article class="score-card">
-            <div class="model-name"><span>DeepSeek</span><span class="status-tested">Tested</span></div>
-            <div class="score-value">68<span>/100</span></div>
-            <div class="bar" aria-label="DeepSeek score 68 out of 100"><div class="fill" style="width: 68%"></div></div>
-            <p>Highest recorded score in the May 10 VANITA 2 run.</p>
-          </article>
-
-          <article class="score-card">
-            <div class="model-name"><span>ChatGPT</span><span class="status-tested">Tested</span></div>
-            <div class="score-value">11<span>/100</span></div>
-            <div class="bar" aria-label="ChatGPT score 11 out of 100"><div class="fill" style="width: 11%"></div></div>
-            <p>Lowest recorded score in the May 10 VANITA 2 run.</p>
-          </article>
-
-          <article class="score-card">
-            <div class="model-name"><span>Gemini</span><span class="status-tested">Tested</span></div>
-            <div class="score-value">32<span>/100</span></div>
-            <div class="bar" aria-label="Gemini score 32 out of 100"><div class="fill" style="width: 32%"></div></div>
-            <p>Mid-range result compared with the tested model set.</p>
-          </article>
-
-          <article class="score-card untested">
-            <div class="model-name"><span>Claude</span><span class="status-untested">Untested</span></div>
-            <div class="score-value">Untested</div>
-            <div class="bar" aria-label="Claude untested"><div class="fill" style="width: 0%"></div></div>
-            <p>No VANITA 2 score has been logged yet.</p>
-          </article>
-
-          <article class="score-card untested">
-            <div class="model-name"><span>Kimi</span><span class="status-untested">Untested</span></div>
-            <div class="score-value">Untested</div>
-            <div class="bar" aria-label="Kimi untested"><div class="fill" style="width: 0%"></div></div>
-            <p>No VANITA 2 score has been logged yet.</p>
-          </article>
-
-          <article class="score-card untested">
-            <div class="model-name"><span>Perplexity</span><span class="status-untested">Untested</span></div>
-            <div class="score-value">Untested</div>
-            <div class="bar" aria-label="Perplexity untested"><div class="fill" style="width: 0%"></div></div>
-            <p>No VANITA 2 score has been logged yet.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="summary">
-        <div class="summary-grid">
-          <div class="panel">
-            <h3>Test snapshot</h3>
-            <p>
-              VANITA 2 was logged on May 10th, 2026 as a comparative injection-resistance test across multiple AI systems. Three models currently have numeric scores, while three remain pending.
-            </p>
-            <ul>
-              <li>Highest tested score: DeepSeek at 68/100</li>
-              <li>Lowest tested score: ChatGPT at 11/100</li>
-              <li>Untested models remain marked separately</li>
-            </ul>
-          </div>
-
-          <div class="table-card">
-            <div class="table-head">
-              <span>vanita-2-may10-2026.table</span>
-              <span>score log</span>
-            </div>
-            <table aria-label="VANITA 2 model score table">
-              <thead>
-                <tr>
-                  <th>Model</th>
-                  <th>Status</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody>
+        <h2>Scores</h2>
+        <p class="note">Scores are out of 100. Untested models are kept in the table so the test log stays clear.</p>
+        <table aria-label="VANITA 2 model scores">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Status</th>
+              <th>Score</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
                 <tr>
                   <td>DeepSeek</td>
-                  <td class="status-tested">Tested</td>
-                  <td>68/100</td>
+                  <td class="">Tested</td>
+                  <td><span class="score">68/100</span></td>
+                  <td>Highest recorded score in the May 10 run.</td>
                 </tr>
                 <tr>
                   <td>ChatGPT</td>
-                  <td class="status-tested">Tested</td>
-                  <td>11/100</td>
+                  <td class="">Tested</td>
+                  <td><span class="score">11/100</span></td>
+                  <td>Lowest recorded score in the May 10 run.</td>
                 </tr>
                 <tr>
                   <td>Gemini</td>
-                  <td class="status-tested">Tested</td>
-                  <td>32/100</td>
+                  <td class="">Tested</td>
+                  <td><span class="score">32/100</span></td>
+                  <td>Middle result among the tested models.</td>
                 </tr>
                 <tr>
                   <td>Claude</td>
-                  <td class="status-untested">Untested</td>
-                  <td>—</td>
+                  <td class="untested">Untested</td>
+                  <td><span class="untested">Untested</span></td>
+                  <td>No result logged yet.</td>
                 </tr>
                 <tr>
                   <td>Kimi</td>
-                  <td class="status-untested">Untested</td>
-                  <td>—</td>
+                  <td class="untested">Untested</td>
+                  <td><span class="untested">Untested</span></td>
+                  <td>No result logged yet.</td>
                 </tr>
                 <tr>
                   <td>Perplexity</td>
-                  <td class="status-untested">Untested</td>
-                  <td>—</td>
+                  <td class="untested">Untested</td>
+                  <td><span class="untested">Untested</span></td>
+                  <td>No result logged yet.</td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
+          </tbody>
+        </table>
+
+        <div class="summary" aria-label="Score summary">
+        <div class="card"><strong>68/100</strong><span>Top score: DeepSeek</span></div>
+        <div class="card"><strong>11/100</strong><span>Lowest score: ChatGPT</span></div>
+        <div class="card"><strong>3 tested</strong><span>DeepSeek, ChatGPT, Gemini</span></div>
         </div>
       </section>
 
+      <section id="notes">
+        <h2>Test notes</h2>
+        <p class="note">VANITA 2 is kept as a score log with minimal styling and plain notes.</p>
+        <p class="note">Additional model results can be added later without changing the page structure.</p>
+      </section>
+
       <section>
-        <div class="cta">
-          <h2>More test data coming soon.</h2>
-          <p>
-            Claude, Kimi, and Perplexity are currently marked as untested for VANITA 2. This page can be updated when new results are collected.
-          </p>
-        
-        </div>
+        <a class="back-link" href="index.html#tests">Back to xLLM test list</a>
       </section>
     </main>
 
     <footer>
       <p>© 2026 xLLM Research</p>
-      <p>VANITA 2 · May 10th, 2026</p>
+      <p>vanita-2-may10-2026.html</p>
     </footer>
   </div>
 </body>
